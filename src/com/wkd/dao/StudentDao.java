@@ -43,5 +43,32 @@ public class StudentDao {
 		
 		return stu;
 	}
+	
+	/**
+	 *添加学生
+	 * @param stu
+	 * @return
+	 */
+	public boolean addStu(Student s) {
+		
+		try {
+			String sql="insert into student values(?,?,?)";
+			conn = conn=DBUtil.getConnection();
+			pStat = conn.prepareStatement(sql);
+			
+			pStat.setInt(1,s.getSid());
+			pStat.setString(2, s.getSname());
+			pStat.setInt(3, s.getSage());
+			int flag = pStat.executeUpdate();
+			if (flag > 0)
+				return true;
+			else
+				return false;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			DBUtil.closeAll(conn, null, pStat, rs);
+		}
+	} // end add
 
 }
